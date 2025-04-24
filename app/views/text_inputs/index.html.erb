@@ -1,13 +1,10 @@
 <h1>Text Inputs</h1>
-
 <% if notice %>
   <div class="alert alert-success"><%= notice %></div>
 <% end %>
-
 <div class="mb-3">
   <%= link_to "New Text Input", new_text_input_path, class: "btn btn-primary" %>
 </div>
-
 <% if @text_inputs.any? %>
   <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -24,7 +21,7 @@
           <tr>
             <td><%= text_input.name %></td>
             <td><%= truncate(text_input.content, length: 100) %></td>
-            <td><%= text_input.created_at.to_s(:short) %></td>
+            <td><%= text_input.created_at.to_s %></td>
             <td>
               <%= link_to "View", text_input_path(text_input), class: "btn btn-sm btn-info" %>
             </td>
@@ -38,3 +35,4 @@
     No text inputs have been created yet. <%= link_to "Create one now", new_text_input_path %>.
   </div>
 <% end %>
+
