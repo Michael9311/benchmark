@@ -13,8 +13,7 @@
 #
 # Indexes
 #
-#  index_llms_on_name                   (name) UNIQUE
-#  index_llms_on_provider_and_model_id  (provider,model_id) UNIQUE
+#  index_llms_on_name  (name) UNIQUE
 #
 class AnthropicLlm < Llm
   # Example implementation for Anthropic models (Claude)

@@ -13,8 +13,7 @@
 #
 # Indexes
 #
-#  index_llms_on_name                   (name) UNIQUE
-#  index_llms_on_provider_and_model_id  (provider,model_id) UNIQUE
+#  index_llms_on_name  (name) UNIQUE
 #
 class Llm < ApplicationRecord
   has_many :runs
@@ -40,16 +39,13 @@ class Llm < ApplicationRecord
     }.merge(parameters || {})
   end
   
-  # This should be implemented for actual API calls
+  # This must be implemented by child classes
   def call(prompt_text, options = {})
-    # Implementation for calling the LLM API
-    # This is a placeholder that would be replaced with actual API calls
-    
-    # In a real implementation:
+    # Implementation for calling the LLM API should:
     # 1. Merge default parameters with provided options
     # 2. Call the appropriate API based on provider
     # 3. Process and return the response
     
-    "This is a placeholder response. Implement real API calls for #{full_name}."
+    raise NotImplementedError, "#{self.class.name} must implement the 'call' method"
   end
 end

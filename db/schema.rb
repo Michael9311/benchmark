@@ -43,7 +43,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_162356) do
     t.datetime "updated_at", null: false
     t.string "type"
     t.index ["name"], name: "index_llms_on_name", unique: true
-    t.index ["provider", "model_id"], name: "index_llms_on_provider_and_model_id", unique: true
   end
 
   create_table "prompts", force: :cascade do |t|
