@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_04_24_000005) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_162356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_04_24_000005) do
     t.jsonb "parameters", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
     t.index ["name"], name: "index_llms_on_name", unique: true
     t.index ["provider", "model_id"], name: "index_llms_on_provider_and_model_id", unique: true
   end
@@ -64,10 +65,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_04_24_000005) do
     t.jsonb "metadata", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0, null: false
     t.index ["input_id", "prompt_id", "llm_id"], name: "index_runs_on_input_prompt_llm"
     t.index ["input_id"], name: "index_runs_on_input_id"
     t.index ["llm_id"], name: "index_runs_on_llm_id"
     t.index ["prompt_id"], name: "index_runs_on_prompt_id"
+    t.index ["status"], name: "index_runs_on_status"
   end
 
   add_foreign_key "runs", "inputs"

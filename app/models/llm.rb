@@ -6,6 +6,7 @@
 #  name       :string           not null
 #  parameters :jsonb
 #  provider   :string           not null
+#  type       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  model_id   :string           not null

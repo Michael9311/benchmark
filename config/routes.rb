@@ -17,6 +17,13 @@ Rails.application.routes.draw do
   
   # LLMs routes
   resources :llms
+  
+  # Runs routes
+  resources :runs do
+    member do
+      post :execute
+    end
+  end
 
   # Defines the root path route ("/")
   root "text_inputs#index"
