@@ -1,0 +1,68 @@
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold leading-6 text-gray-900">Text Inputs</h1>
+      <p class="mt-2 text-sm text-gray-700">A list of all the text inputs used for benchmarking.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <%= link_to "New Text Input", new_text_input_path, class: "block rounded-md bg-black px-3 py-2 text-center text-sm font-semibold text-white hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" %>
+    </div>
+  </div>
+
+  <% if notice %>
+    <div class="rounded-md bg-green-50 p-4 mt-4">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm font-medium text-green-800"><%= notice %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @text_inputs.any? %>
+    <div class="mt-8 flow-root">
+      <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Preview</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Created At</th>
+                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span class="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <% @text_inputs.each do |text_input| %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= text_input.name %></td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= truncate(text_input.content, length: 100) %></td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= text_input.created_at.strftime("%b %d, %Y %H:%M") %></td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                      <%= link_to "View", text_input_path(text_input), class: "text-black hover:text-gray-700" %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-md bg-gray-50 p-4 mt-4">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm text-gray-700">
+            No text inputs have been created yet. 
+            <%= link_to "Create one now", new_text_input_path, class: "font-medium text-black hover:text-gray-800" %>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

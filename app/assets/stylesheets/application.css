@@ -8,3 +8,14 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea {
+  padding: 0.75rem !important;
+}

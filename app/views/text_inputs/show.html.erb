@@ -1,0 +1,40 @@
+<div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+  <% if notice %>
+    <div class="rounded-md bg-green-50 p-4 mb-6">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm font-medium text-green-800"><%= notice %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+    <div class="px-4 py-6 sm:px-6">
+      <h3 class="text-base font-semibold leading-7 text-gray-900">Text Input: <%= @text_input.name %></h3>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Created: <%= @text_input.created_at.strftime("%B %d, %Y %H:%M") %></p>
+    </div>
+    <div class="border-t border-gray-100">
+      <dl class="divide-y divide-gray-100">
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Name</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @text_input.name %></dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Content</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <div class="rounded-md bg-gray-50 p-4 overflow-auto">
+              <pre class="text-sm text-gray-800 whitespace-pre-wrap"><%= @text_input.content %></pre>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-start gap-x-6">
+    <%= link_to "Back to List", text_inputs_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+    <%= link_to "New Text Input", new_text_input_path, class: "rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" %>
+  </div>
+</div>
+

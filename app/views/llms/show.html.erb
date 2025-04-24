@@ -1,0 +1,58 @@
+<div class="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+  <% if notice %>
+    <div class="rounded-md bg-green-50 p-4 mb-6">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm font-medium text-green-800"><%= notice %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+    <div class="px-4 py-6 sm:px-6">
+      <h3 class="text-base font-semibold leading-7 text-gray-900">LLM: <%= @llm.name %></h3>
+      <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Created: <%= @llm.created_at.strftime("%B %d, %Y %H:%M") %></p>
+    </div>
+    <div class="border-t border-gray-100">
+      <dl class="divide-y divide-gray-100">
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Name</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @llm.name %></dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Provider</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @llm.provider %></dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Model ID</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @llm.model_id %></dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Full Name</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @llm.full_name %></dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Parameters</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <div class="rounded-md bg-gray-50 p-4">
+              <p class="mb-2"><strong>Temperature:</strong> <%= @llm.model_parameters[:temperature] %></p>
+              <p><strong>Max Tokens:</strong> <%= @llm.model_parameters[:max_tokens] %></p>
+              <% if @llm.parameters.is_a?(Hash) && @llm.parameters.except(:temperature, :max_tokens).any? %>
+                <% @llm.parameters.except(:temperature, :max_tokens).each do |key, value| %>
+                  <p class="mt-1"><strong><%= key.to_s.titleize %>:</strong> <%= value %></p>
+                <% end %>
+              <% end %>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-start gap-x-6">
+    <%= link_to "Back to List", llms_path, class: "text-sm font-semibold leading-6 text-gray-900" %>
+    <%= link_to "Edit", edit_llm_path(@llm), class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+    <%= link_to "Delete", llm_path(@llm), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+  </div>
+</div>
