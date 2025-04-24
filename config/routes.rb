@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   
   # Prompts routes
   resources :prompts
+  
+  # LLMs routes
+  resources :llms
 
   # Defines the root path route ("/")
   root "text_inputs#index"
