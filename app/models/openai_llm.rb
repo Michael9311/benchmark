@@ -17,30 +17,27 @@
 #
 class OpenaiLlm < Llm
   # Example implementation for OpenAI models (GPT)
-  
+
   def initialize(attributes = nil)
     super
     self.provider = "openai" if attributes
   end
-  
+
   def call(prompt_text, options = {})
-    # In a real implementation, this would use the OpenAI API
-    # require "openai"
-    # client = OpenAI::Client.new(access_token: ENV["OPENAI_API_KEY"])
-    
-    # params = model_parameters.merge(options)
-    # response = client.chat(
-    #   parameters: {
-    #     model: model_id,
-    #     messages: [{ role: "user", content: prompt_text }],
-    #     max_tokens: params[:max_tokens],
-    #     temperature: params[:temperature]
-    #   }
-    # )
-    
-    # response.dig("choices", 0, "message", "content")
-    
-    # For now, return a placeholder
-    "This is a simulated response from OpenAI's #{model_id}"
+    OpenAI::Client.new(
+      access_token: ENV.fetch("OPENAI_TOKEN"),
+      log_errors: true
+    )
+
+    client = OpenAI::Client.new
+
+    response = client.chat(
+      parameters: {
+        model: model_id, # Required.
+        messages: [{role: "user", content: "Hello!"}], # Required.
+        temperature: 0.7
+      }
+    )
+    puts response.dig("choices", 0, "message", "content")
   end
 end
