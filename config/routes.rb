@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   # Text Inputs routes
   resources :text_inputs, only: [:index, :new, :create, :show]
+  
+  # Prompts routes
+  resources :prompts
 
   # Defines the root path route ("/")
   root "text_inputs#index"
