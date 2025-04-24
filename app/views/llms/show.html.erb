@@ -33,6 +33,15 @@
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @llm.full_name %></dd>
         </div>
         <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-900">Pricing (per token)</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <div class="rounded-md bg-gray-50 p-4">
+              <p class="mb-2"><strong>Input Price:</strong> <%= @llm.input_price_per_token || "Not set" %></p>
+              <p><strong>Output Price:</strong> <%= @llm.output_price_per_token || "Not set" %></p>
+            </div>
+          </dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-900">Parameters</dt>
           <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
             <div class="rounded-md bg-gray-50 p-4">

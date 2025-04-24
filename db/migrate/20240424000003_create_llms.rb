@@ -8,8 +8,8 @@ class CreateLlms < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    
+
     add_index :llms, :name, unique: true
-    add_index :llms, [:provider, :model_id], unique: true
   end
 end
+

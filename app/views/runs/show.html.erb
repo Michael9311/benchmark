@@ -1,0 +1,107 @@
+<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <div class="space-y-10">
+    <div class="px-4 sm:px-0 flex justify-between items-center">
+      <div>
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Run Details</h2>
+        <p class="mt-1 text-sm leading-6 text-gray-600">Details of the run and its execution status.</p>
+      </div>
+      <div class="flex space-x-3">
+        <% if @run.draft? || @run.failed? %>
+          <%= button_to "Execute Run", execute_run_path(@run), method: :post, class: "rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black" %>
+        <% end %>
+        <%= link_to "Back to Runs", runs_path, class: "rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3">
+      <!-- Status card -->
+      <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+        <div class="px-4 py-6 sm:p-8">
+          <h3 class="text-lg font-semibold mb-4">Status</h3>
+          <div class="flex flex-col space-y-4">
+            <% status_color = case @run.status 
+               when "draft" then "bg-gray-100 text-gray-800"
+               when "in_progress" then "bg-blue-100 text-blue-800"
+               when "complete" then "bg-green-100 text-green-800"
+               when "failed" then "bg-red-100 text-red-800"
+               end %>
+            <div class="flex items-center">
+              <span class="text-sm font-semibold">Status:</span>
+              <span class="ml-auto rounded-full px-3 py-1 text-xs font-medium <%= status_color %>">
+                <%= @run.status.humanize %>
+              </span>
+            </div>
+            <div class="flex items-center">
+              <span class="text-sm font-semibold">Created:</span>
+              <span class="ml-auto text-sm text-gray-500"><%= @run.created_at.strftime("%B %d, %Y at %I:%M %p") %></span>
+            </div>
+            <% if @run.complete? %>
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">Latency:</span>
+                <span class="ml-auto text-sm"><%= @run.latency&.round(2) %> seconds</span>
+              </div>
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">Tokens In:</span>
+                <span class="ml-auto text-sm"><%= @run.tokens_in || 'N/A' %></span>
+              </div>
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">Tokens Out:</span>
+                <span class="ml-auto text-sm"><%= @run.tokens_out || 'N/A' %></span>
+              </div>
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">Tokens/Second:</span>
+                <span class="ml-auto text-sm"><%= @run.tokens_per_second&.round(2) || 'N/A' %></span>
+              </div>
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">Estimated Cost:</span>
+                <span class="ml-auto text-sm">$<%= @run.cost&.round(5) || 'N/A' %></span>
+              </div>
+            <% end %>
+            <% if @run.failed? && @run.metadata && @run.metadata["error"] %>
+              <div class="mt-4 p-3 bg-red-50 rounded-md">
+                <h4 class="text-sm font-medium text-red-800">Error:</h4>
+                <p class="mt-1 text-sm text-red-700"><%= @run.metadata["error"] %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- Details cards -->
+      <div class="md:col-span-2 space-y-8">
+        <!-- Components card -->
+        <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+          <div class="px-4 py-6 sm:p-8">
+            <h3 class="text-lg font-semibold mb-4">Components</h3>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-sm font-medium text-gray-900 mb-2">Input</h4>
+                <p class="text-sm text-gray-700 mb-2"><%= @run.input.name %></p>
+                <p class="text-xs text-gray-500"><%= link_to "View Input", @run.input.type == "TextInput" ? text_input_path(@run.input) : "#", class: "text-black hover:underline" %></p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-sm font-medium text-gray-900 mb-2">Prompt</h4>
+                <p class="text-sm text-gray-700 mb-2"><%= @run.prompt.name %></p>
+                <p class="text-xs text-gray-500"><%= link_to "View Prompt", prompt_path(@run.prompt), class: "text-black hover:underline" %></p>
+              </div>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <h4 class="text-sm font-medium text-gray-900 mb-2">LLM</h4>
+                <p class="text-sm text-gray-700 mb-2"><%= @run.llm.name %></p>
+                <p class="text-xs text-gray-500"><%= link_to "View LLM", llm_path(@run.llm), class: "text-black hover:underline" %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Response card -->
+        <% if @run.complete? %>
+          <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl">
+            <div class="px-4 py-6 sm:p-8">
+              <h3 class="text-lg font-semibold mb-4">Response</h3>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <pre class="text-sm text-gray-700 whitespace-pre-wrap"><%= @run.response %></pre>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
