@@ -24,20 +24,22 @@ class OpenaiLlm < Llm
   end
 
   def call(prompt_text, options = {})
-    OpenAI::Client.new(
+    client = OpenAI::Client.new(
       access_token: ENV.fetch("OPENAI_TOKEN"),
       log_errors: true
     )
 
-    client = OpenAI::Client.new
+    params = model_parameters.merge(options)
 
     response = client.chat(
       parameters: {
-        model: model_id, # Required.
-        messages: [{role: "user", content: "Hello!"}], # Required.
-        temperature: 0.7
+        model: model_id,
+        messages: [{role: "user", content: prompt_text}],
+        temperature: params[:temperature],
+        max_tokens: params[:max_tokens]
       }
     )
-    puts response.dig("choices", 0, "message", "content")
+
+    response.dig("choices", 0, "message", "content")
   end
 end

@@ -11,7 +11,7 @@ class LlmsController < ApplicationController
     @llm = create_llm_instance(llm_params)
 
     if @llm.save
-      redirect_to @llm, notice: "LLM was successfully created."
+      redirect_to llm_path(@llm), notice: "LLM was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class LlmsController < ApplicationController
     @llm = Llm.find(params[:id])
     
     if @llm.update(llm_params)
-      redirect_to @llm, notice: "LLM was successfully updated."
+      redirect_to llm_path(@llm), notice: "LLM was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
