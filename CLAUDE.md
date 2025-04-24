@@ -9,6 +9,9 @@
 - Run server: `bin/rails server` or `bin/dev`
 - Setup development: `bin/setup`
 
+## Important Note
+- User will handle linting, testing, and running the server unless explicitly instructed otherwise
+
 ## Code Style
 - Follows [Rails Omakase Style Guide](https://github.com/rails/rubocop-rails-omakase)
 - Uses 2 spaces for indentation
